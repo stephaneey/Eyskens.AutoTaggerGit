@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Eyskens.AutoTaggerWeb.Models.SPTaggableList>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.clink').change(function () {
+            var target = $(this);
+            $.ajax({
+                url: "@Html.Raw(Url.Action("SetSync"))?SPHostUrl=https://eyskens.sharepoint.com/sites/autotagger",        
+                method:'POST',
+                data: {sync: $(this).is(':checked'), id:$(this).val()},
+                success: function (data) {
+                    if(data.indexOf("True")!=-1)
+                    {
+                        target.attr("disabled", true);
+                    }
+                    else
+                    {
+                        target.removeAttr("disabled");
+                    }
+                }
+        });
+     });
+    });    
+
+</script>
+<table id="listfields">    
+    @if(Model.Count() == 0)
+    {
+        <div>There are no taxonomy columns associated to libraries in this site</div>
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <b>@Html.DisplayFor(modelItem => item.Title)</b>
+            </td>
+            <td>&nbsp;Async.&nbsp; <input type="checkbox" class="clink" checked="@item.Asynchronous" value="@(item.Id)" @item.Disabled title="When ticked, the associated RER is asynchronous else synchronous"/></td>
+            <td>
+                <img 
+                     id="@String.Format("image_loading{0}",@item.Id)" 
+                     alt="" 
+                     src="@Url.Content("~/content/loading.gif")" 
+                     class="progress" />
+            </td>
+            
+        </tr>
+        <tr>
+            <td colspan="3">
+                <table cellpadding="5" cellspacing="5">         
+                    <tr>
+                        @foreach (var f in item.Fields)
+                        {
+                            
+                                <td>@Html.DisplayFor(fieldItem => f.Title)</td>
+                                    if (!f.TaggingEnabled)
+                                    {                                        
+                                        <td>                                                                            
+                                            @Ajax.ActionLink("Enable AT", "EnableAutoTagging",
+                                                new { 
+                                                    id = string.Concat(item.Id, "_", f.Id),                                                                                                    
+                                                    SPHostUrl = "https://eyskens.sharepoint.com/sites/autotagger"
+                                                 },
+                                                new AjaxOptions
+                                                {
+                                                    InsertionMode = InsertionMode.Replace,
+                                                    UpdateTargetId = "listfields",
+                                                    HttpMethod = "POST",
+                                                    LoadingElementId = @String.Format("image_loading{0}", @item.Id)
+                                                })
+                                        </td>
+                                    }
+                                        
+                                    if (f.TaggingEnabled)
+                                    {
+                                        <td>
+                                            @Ajax.ActionLink("Disable AT", "DisableAutoTagging", new {
+                                                id = string.Concat(item.Id, "_", f.Id),
+                                                SPHostUrl = "https://eyskens.sharepoint.com/sites/autotagger" }, 
+                                                new AjaxOptions
+                                                {
+                                                    InsertionMode = InsertionMode.Replace,
+                                                    UpdateTargetId = "listfields",
+                                                    HttpMethod = "POST",
+                                                    LoadingElementId = @String.Format("image_loading{0}", @item.Id)
+                                                })
+                                        </td>
+                                    }
+                               
+                            
+                        }
+                       </tr>     
+                </table>
+            </td>
+
+        </tr>
+    }
+
+</table>

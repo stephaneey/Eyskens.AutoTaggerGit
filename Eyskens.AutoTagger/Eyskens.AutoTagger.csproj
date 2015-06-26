@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{901EF56C-35B6-4A5C-9F74-FDAE5455FF4D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Eyskens.AutoTagger</RootNamespace>
+    <AssemblyName>Eyskens.AutoTagger</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetOfficeVersion>16.0</TargetOfficeVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <MinimumOfficeToolsVersion>12.1</MinimumOfficeToolsVersion>
+    <IncludeAssemblyInPackage>False</IncludeAssemblyInPackage>
+    <ProjectMode>SharePointApp</ProjectMode>
+    <AppFeaturePartId>{db2d3c59-f3fb-4ff2-b9ee-ce03dffc9cb1}</AppFeaturePartId>
+    <WspPartId>{cd7211d0-78b7-42c2-947f-d0d9e2dc2051}</WspPartId>
+    <WorkflowPartId>{38d5ac78-9e1f-4187-adac-41da4b718145}</WorkflowPartId>
+    <CspkgPartId>{3c421eca-05d3-48b0-9649-fee6501a9f17}</CspkgPartId>
+    <SqlPackagePartId>{58d173b0-6d43-4c64-b405-9cc216c978c1}</SqlPackagePartId>
+    <ActivePublishProfile>autotagger</ActivePublishProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="appicon96.png">
+      <OpcRelationship>manifest-icon</OpcRelationship>
+    </Content>
+    <Content Include="Elements.xml" />
+    <Content Include="Features\Feature1\Feature1.Template.xml">
+      <DependentUpon>Feature1.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\Feature2\Feature2.Template.xml">
+      <DependentUpon>Feature2.feature</DependentUpon>
+    </Content>
+    <Content Include="ListConfig\Elements.xml" />
+    <Content Include="ListConfig\ListConfigInstance\Elements.xml" />
+    <Content Include="ListConfig\Schema.xml" />
+    <Content Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </Content>
+    <Content Include="TaggingConfig\Elements.xml" />
+    <Content Include="TaggingConfig\Schema.xml" />
+    <Content Include="TaggingConfig\TaggingConfigInstance\Elements.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppManifestFile Include="AppManifest.xml">
+      <SubType>Designer</SubType>
+    </AppManifestFile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Eyskens.AutoTaggerWeb\Eyskens.AutoTaggerWeb.csproj">
+      <Project>{89830BE9-1547-45D7-8CD7-EAB2644C27B6}</Project>
+      <Name>SiverIT.AutoTaggerWeb</Name>
+      <Private>True</Private>
+      <RoleType>Web</RoleType>
+      <OutputItemType>SharePointWebProjectOutput</OutputItemType>
+      <RoleName>SiverIT.AutoTaggerWeb</RoleName>
+      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Features\Feature1\Feature1.feature">
+      <FeatureId>{3ff6e479-c180-42c3-ae2d-c7a3af1ff9d3}</FeatureId>
+    </None>
+    <None Include="Features\Feature2\Feature2.feature">
+      <FeatureId>{3a81201f-1cd0-4f6c-a008-7d1c53669e39}</FeatureId>
+    </None>
+    <None Include="ListConfig\ListConfigInstance\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{bad472e5-a36a-4923-b038-47a6c02d05de}</SharePointProjectItemId>
+    </None>
+    <None Include="ListConfig\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{08ce8a7b-605f-46f4-92d5-5543e1440b74}</SharePointProjectItemId>
+    </None>
+    <None Include="Package\Package.package">
+      <PackageId>{1ddca3c7-eee1-4d63-9552-24e33112050d}</PackageId>
+    </None>
+    <None Include="SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{42dac00d-679a-4ed7-a498-6326bb674a81}</SharePointProjectItemId>
+    </None>
+    <None Include="TaggingConfig\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{a98de7dc-848b-4643-be1e-4f290bfcb2e9}</SharePointProjectItemId>
+    </None>
+    <None Include="TaggingConfig\TaggingConfigInstance\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{26a2c916-a75d-42ac-b80a-47089dc8cd00}</SharePointProjectItemId>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

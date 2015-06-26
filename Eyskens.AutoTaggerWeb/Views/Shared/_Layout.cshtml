@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Eyskens - SharePoint Online AutoTagger</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/4.0/1/MicrosoftAjax.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>     
+    <script type="text/javascript">
+    var hostweburl;
+    // Load the SharePoint resources.
+    $(document).ready(function () {
+        // Get the URI decoded app web URL.
+        hostweburl = decodeURIComponent(getQueryStringParameter("SPHostUrl"));
+        // The SharePoint js files URL are in the form
+        // web_url/_layouts/15/resource.js
+        var scriptbase = hostweburl + "/_layouts/15/";
+        // Load the js file and continue to the success handler.
+        $.getScript(scriptbase + "SP.UI.Controls.js", renderChrome)
+    });
+    // Function to prepare the options and render the control.
+    function renderChrome() {
+        // The Help, Account, and Contact pages receive the
+        // same query string parameters as the main page.
+        var options = {
+            "appIconUrl": "/Content/Images/tagblue.png",
+            "appTitle": "Auto-Tagging",
+            "settingsLinks": [
+                {
+                    "linkUrl": "http://www.silver-it.com",
+                    "displayName": "About"
+                }
+            ]
+        };
+        var nav = new SP.UI.Controls.Navigation("chrome_ctrl_placeholder", options);
+        nav.setVisible(true);
+    }
+    function getQueryStringParameter(paramToRetrieve) {
+        var params =
+            document.URL.split("?")[1].split("&");
+        var strParams = "";
+        for (var i = 0; i < params.length; i = i + 1) {
+            var singleParam = params[i].split("=");
+            if (singleParam[0] == paramToRetrieve)
+                return singleParam[1];
+        }
+    }
+    </script>
+
+</head>
+<body>
+    <div style="position:absolute;top:0px;" id="chrome_ctrl_placeholder"></div>
+    <div class="container body-content">
+        @RenderBody()        
+        <hr />    
+        <footer>
+            Use this App to enable/disable tagging on the Taxonomy Field of your choice. For performance reasons, only one event receiver is added
+            per list no matter how many taxonomy fields are enabled. Therefore, switching the event receiver mode to synchronous/asynchronous mode is only
+            possible when no more EV is associated to a list, in other words, if you want to switch, you must first disable all EV for a given list and renable
+            after having switched.<br/>
+            If you uninstall this App, we recommend you to disable auto-tagging first for all the lists. Nevertheless, the App will attempt to disable them upon uninstallation. 
+        </footer>
+    </div>
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/spcontext")
+    @Scripts.Render("~/bundles/unobtrusive")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
