@@ -62,7 +62,39 @@ namespace Eyskens.AutoTaggerWeb.Services
 
         void AppUninstalling(SPRemoteEventProperties properties)
         {
-            LogHelper.Log("The application was uninstalled from " + properties.AppEventProperties.HostWebFullUrl);    
+            LogHelper.Log("The application was uninstalled from " + properties.AppEventProperties.HostWebFullUrl);   
+            try
+            {
+                using (ClientContext ctx = TokenHelper.CreateAppEventClientContext(properties, false))
+                {
+                    List<EventReceiverDefinition> events = new List<EventReceiverDefinition>();
+                    var lists = ctx.LoadQuery(ctx.Web.Lists.Where(l => l.BaseType == BaseType.DocumentLibrary).Include(
+                        ll => ll.Title, ll => ll.EventReceivers));
+                    ctx.ExecuteQuery();
+                    foreach (var list in lists)
+                    {
+                        foreach (var ev in list.EventReceivers)
+                        {
+                            if (ev.ReceiverName.Equals(Constants.ItemAddedEventReceiverName) ||
+                                ev.ReceiverName.Equals(Constants.FieldDeletedEventReceiverName))
+                            {
+                                events.Add(ev);
+                            }
+                        }
+                    }
+                    foreach (var eve in events)
+                    {
+                        eve.DeleteObject();
+                    }
+                    ctx.ExecuteQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log(ex.Message + ex.StackTrace, LogSeverity.Error);
+                throw;
+            }
+            
         }
 
         /// <summary>

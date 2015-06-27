@@ -86,7 +86,8 @@ namespace Eyskens.AutoTaggerWeb.Helpers
             ctx.ExecuteQuery();
             if (FieldsForList.Count > 0)
             {
-                foreach (var item in CurrentlyEnabledFields)
+                //foreach (var item in CurrentlyEnabledFields)
+                foreach (var item in FieldsForList)
                 {
                     string FieldId = (item[Constants.FieldIdField] != null) ?
                         item[Constants.FieldIdField].ToString() : string.Empty;
@@ -110,7 +111,9 @@ namespace Eyskens.AutoTaggerWeb.Helpers
             ctx.Load(ctx.Web);
             ctx.ExecuteQuery();
             this.SetSync(ids[0], true,false);
-            return this.ListTaxFields(ids[0]).Count;
+            int lt = this.ListTaxFields(ids[0]).Count;
+            LogHelper.Log("EnableTaggingOnListField count :" + lt + " of list :" + ids[0]);
+            return lt;
         }
         
         public int DisableTaggingOnListField(string id,string listid)
