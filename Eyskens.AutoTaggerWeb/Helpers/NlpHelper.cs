@@ -23,7 +23,7 @@ namespace Eyskens.AutoTaggerWeb.Helpers
                 text.Replace("&", "&amp;").Replace("<", "&lt;"));
             
             XDocument doc = XDocument.Parse(string.Concat("<root>",xml,"</root>"));
-            LogHelper.Log(xml);
+
             var locations = doc.Descendants(Constants.LocationNamedEntity);
             
             foreach (var location in locations)
