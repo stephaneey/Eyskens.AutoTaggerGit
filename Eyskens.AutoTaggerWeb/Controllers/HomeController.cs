@@ -25,7 +25,7 @@ namespace Eyskens.AutoTaggerWeb.Controllers
                 
                 using (var ctx = spContext.CreateUserClientContextForSPHost())
                 {
-                    model = GetModel(ctx, new AppWebHelper(spContext));
+                    model = GetModel(ctx, new AppWebHelper(HttpContext.Request.QueryString[Constants.SPAppWebUrl] as string));
                 }
                 return View(model);
             }
@@ -103,7 +103,7 @@ namespace Eyskens.AutoTaggerWeb.Controllers
             try
             {
                 var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
-                AppWebHelper hlp = new AppWebHelper(spContext);
+                AppWebHelper hlp = new AppWebHelper(HttpContext.Request.QueryString[Constants.SPAppWebUrl] as string);
                 hlp.SetSync(id, sync);
                 LogHelper.Log("sync:" + sync + " id:" + id);
                 SPEnabledList m = new SPEnabledList();
@@ -126,7 +126,7 @@ namespace Eyskens.AutoTaggerWeb.Controllers
             try
             {
                 var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
-                AppWebHelper hlp = new AppWebHelper(spContext);
+                AppWebHelper hlp = new AppWebHelper(HttpContext.Request.QueryString[Constants.SPAppWebUrl] as string);
                 using (var ctx = spContext.CreateUserClientContextForSPHost())
                 {
                     if (hlp.EnableTaggingOnListField(id) == 1) //we register only one RER per list.
@@ -136,6 +136,7 @@ namespace Eyskens.AutoTaggerWeb.Controllers
                         ctx.Load(TargetList);
                         ctx.Load(TargetList.EventReceivers);
                         ctx.ExecuteQuery();
+                        LogHelper.Log("Adding Event Receivers");
                         ConfigurationHelper.EnableDisableTagging(ctx, TargetList, true,hlp);
                     }                    
                     return PartialView("ListFields", GetModel(ctx, hlp));
@@ -154,7 +155,7 @@ namespace Eyskens.AutoTaggerWeb.Controllers
             try
             {
                 var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext);
-                AppWebHelper hlp = new AppWebHelper(spContext);
+                AppWebHelper hlp = new AppWebHelper(HttpContext.Request.QueryString[Constants.SPAppWebUrl] as string);
                 using (var ctx = spContext.CreateUserClientContextForSPHost())
                 {
                     string[] ids = id.Split(new char[] { '_' });
@@ -171,7 +172,7 @@ namespace Eyskens.AutoTaggerWeb.Controllers
                         LogHelper.Log("After EnableDisableTagging");
                     }
 
-                    return PartialView("ListFields", GetModel(ctx, new AppWebHelper(spContext)));
+                    return PartialView("ListFields", GetModel(ctx, new AppWebHelper(HttpContext.Request.QueryString[Constants.SPAppWebUrl] as string)));
                 }
             }
             catch (Exception ex)
@@ -181,5 +182,6 @@ namespace Eyskens.AutoTaggerWeb.Controllers
             }
             
         }
+        
     }
 }

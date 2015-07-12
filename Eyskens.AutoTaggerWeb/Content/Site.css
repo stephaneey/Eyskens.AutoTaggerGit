@@ -27,7 +27,8 @@ textarea {
     display: none;
 }
 
-table
-{
-    border:none;
+.autotaggingtable
+{    
+    border:none;    
+    
 }

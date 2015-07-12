@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Eyskens.AutoTaggerWeb.Models.GlobalSetting>
+@{    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p style="margin-top:90px;"></p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.key)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.value)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.key)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.value)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id,
+                                                   SPHostUrl = HttpContext.Current.Request.QueryString["SPHostUrl"],
+                                                   SPAppWebUrl = HttpContext.Current.Request.QueryString["SPAppWebUrl"]
+            }) 
+            
+        </td>
+    </tr>
+}
+
+</table>

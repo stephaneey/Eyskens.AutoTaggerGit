@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Eyskens.AutoTaggerWeb.Models.EmptyWord>
+
+    <table class="autotaggingtable" id="autotaggingtable">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.word)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.lang)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.word)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lang)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit",
+                    new
+                    {
+                        id = item.id,
+                        SPHostUrl = HttpContext.Current.Request.QueryString["SPHostUrl"],
+                        SPAppWebUrl = HttpContext.Current.Request.QueryString["SPAppWebUrl"]
+                    }) |
+                    @Html.ActionLink("Delete", "Delete",
+                    new
+                    {
+                        id = item.id,
+                        SPHostUrl = HttpContext.Current.Request.QueryString["SPHostUrl"],
+                        SPAppWebUrl = HttpContext.Current.Request.QueryString["SPAppWebUrl"]
+                    })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    
+

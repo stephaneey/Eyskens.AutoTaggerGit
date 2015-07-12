@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -35,6 +36,14 @@ namespace Eyskens.AutoTaggerWeb.Helpers
         public static string GetStorageCn()
         {
             return WebConfigurationManager.AppSettings[Constants.StorageCN];
+        }
+
+        public static string GetAppCatalogUrl()
+        {
+            using(StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath("~/App_Data/AppCataLog.xml")))
+            {
+                return sr.ReadToEnd();
+            }
         }
 
         public static void EnableDisableTagging(ClientContext ctx,List TargetList,bool AttachEvents,AppWebHelper hlp)

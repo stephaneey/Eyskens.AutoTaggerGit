@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Eyskens.AutoTaggerWeb.Models.EmptyWord>
+
+<p style="margin-top:100px;">
+    @Html.ActionLink("Create New", "Create",
+        new {
+            SPHostUrl = HttpContext.Current.Request.QueryString["SPHostUrl"],
+            SPAppWebUrl = HttpContext.Current.Request.QueryString["SPAppWebUrl"]
+        })
+    &nbsp;
+    @Html.ActionLink("Upload words", "Index","Upload",
+        new
+        {
+            SPHostUrl = HttpContext.Current.Request.QueryString["SPHostUrl"],
+            SPAppWebUrl = HttpContext.Current.Request.QueryString["SPAppWebUrl"]
+        },null)
+</p>
+<table>
+    <tr>
+        @for (int i = 65; i < 91; i++)
+        {
+            <td>
+                @Ajax.ActionLink(Convert.ToChar(i).ToString(), "ByLetter",
+            new
+            {
+                letter = Convert.ToChar(i).ToString(),
+                SPHostUrl = HttpContext.Current.Request.QueryString["SPHostUrl"],
+                SPAppWebUrl = HttpContext.Current.Request.QueryString["SPAppWebUrl"]
+            },
+                new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "autotaggingtable",
+                    HttpMethod = "GET"
+                    
+                })
+            </td>
+        }
+    </tr>
+</table>
+
+<div style="height:300px;overflow-y:scroll;">
+    @Html.Partial("words")
+</div>

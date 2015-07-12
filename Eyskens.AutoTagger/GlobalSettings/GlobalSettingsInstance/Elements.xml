@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <ListInstance Title="GlobalSettings" OnQuickLaunch="TRUE" TemplateType="100" Url="Lists/GlobalSettings" Description="My List Instance">
+    <Data>
+      <Rows>
+        <Row>
+          <Field Name="Title">KeywordRecognitionTreshold</Field>
+          <Field Name="Value1">10</Field>
+        </Row>
+        <Row>
+          <Field Name="Title">KeywordCreationTreshold</Field>
+          <Field Name="Value1">15</Field>
+        </Row>
+        <Row>
+          <Field Name="Title">EnableKeywordCreation</Field>
+          <Field Name="Value1">false</Field>
+        </Row>
+      </Rows>
+    </Data>
+  </ListInstance>
+</Elements>

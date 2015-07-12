@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="769ff0b4-2cf9-4e2e-90d1-04a46a85b87c" solutionId="769ff0b4-2cf9-4e2e-90d1-04a46a85b87c" resetWebServer="false" sharePointProductVersion="16.0" name="Eyskens.AutoTagger" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="3ff6e479-c180-42c3-ae2d-c7a3af1ff9d3" />
+    <featureReference itemId="3a81201f-1cd0-4f6c-a008-7d1c53669e39" />
+    <featureReference itemId="c5aa23ec-e0c9-4f1c-bc9e-3cd558ab9a1a" />
+    <featureReference itemId="8e9fb45b-e4bb-4e88-b1ad-7db7f87fce0d" />
+    <featureReference itemId="ec2de8c4-15dc-4388-aef8-7e5a8123114a" />
+  </features>
+</package>

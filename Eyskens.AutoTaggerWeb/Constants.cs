@@ -28,7 +28,22 @@ namespace Eyskens.AutoTaggerWeb
         public const string ListConfig = "ListConfig";
         public const string IdAttribute = "ID";
         public const string FieldElement = "Field";
-        
-
+        public const int KeywordIntervalRefresh = 10;
+        public const string KeywordRecognitionTreshold = "KeywordRecognitionTreshold";
+        public const string KeywordCreationTreshold = "KeywordCreationTreshold";
+        public const string EnableKeywordCreation = "EnableKeywordCreation";
+        public const string TaxFieldInternalName = "TaxKeyword";
+        public static string EmptyWordsList = "EmptyWords";
+        public static string LangField="Lang";
+        public static string ValueField = "Value1";
+        public static string GlobalConfigList="GlobalSettings";
+        public static string AutoTaggingAppWebUrl="AutoTaggingAppWebUrl";
+        public static string AppCatalogTemplate = "APPCATALOG";
+        public static string SPAppWebUrl="SPAppWebUrl";
+        public static string OrganizationNamedEntity = "ORGANIZATION";
+        public static string PersonNamedEntity = "PERSON";
+        public static string LocationNamedEntity = "LOCATION";
+        public static string Administrators="TaggingAdmins";
+        public static string AdminList="Administrators";
     }
 }

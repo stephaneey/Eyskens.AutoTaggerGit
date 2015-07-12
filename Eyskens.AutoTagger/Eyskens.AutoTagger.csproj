@@ -44,16 +44,39 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Administrators\AdministratorsInstance\Elements.xml" />
+    <Content Include="Administrators\Elements.xml" />
+    <Content Include="Administrators\Schema.xml" />
     <Content Include="appicon96.png">
       <OpcRelationship>manifest-icon</OpcRelationship>
     </Content>
+    <Content Include="ECB\Elements.xml">
+      <OpcRelationship>feature-elementmanifest</OpcRelationship>
+    </Content>
     <Content Include="Elements.xml" />
+    <Content Include="EmptyWords\Elements.xml" />
+    <Content Include="EmptyWords\EmptyWordsInstance\Elements.xml" />
+    <Content Include="EmptyWords\Schema.xml" />
     <Content Include="Features\Feature1\Feature1.Template.xml">
       <DependentUpon>Feature1.feature</DependentUpon>
     </Content>
     <Content Include="Features\Feature2\Feature2.Template.xml">
       <DependentUpon>Feature2.feature</DependentUpon>
     </Content>
+    <Content Include="Features\Feature3\Feature3.Template.xml">
+      <DependentUpon>Feature3.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\Feature4\Feature4.Template.xml">
+      <DependentUpon>Feature4.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\Feature5\Feature5.Template.xml">
+      <DependentUpon>Feature5.feature</DependentUpon>
+    </Content>
+    <Content Include="GlobalSettings\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="GlobalSettings\GlobalSettingsInstance\Elements.xml" />
+    <Content Include="GlobalSettings\Schema.xml" />
     <Content Include="ListConfig\Elements.xml" />
     <Content Include="ListConfig\ListConfigInstance\Elements.xml" />
     <Content Include="ListConfig\Schema.xml" />
@@ -81,12 +104,42 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Administrators\AdministratorsInstance\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{500771c1-f72b-4510-a0b2-d3ba19a25cba}</SharePointProjectItemId>
+    </None>
+    <None Include="Administrators\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{bd73bf13-794e-415d-86cc-3fac7a3e992a}</SharePointProjectItemId>
+    </None>
     <None Include="app.config" />
+    <None Include="ECB\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{707ef3d0-599f-47a5-866f-03858ebcc951}</SharePointProjectItemId>
+    </None>
+    <None Include="EmptyWords\EmptyWordsInstance\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{a8e2b5af-7a4e-4423-85c8-d10356b9fca4}</SharePointProjectItemId>
+    </None>
+    <None Include="EmptyWords\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{d3a6d059-d998-4b06-b138-53ac8f218491}</SharePointProjectItemId>
+    </None>
     <None Include="Features\Feature1\Feature1.feature">
       <FeatureId>{3ff6e479-c180-42c3-ae2d-c7a3af1ff9d3}</FeatureId>
     </None>
     <None Include="Features\Feature2\Feature2.feature">
       <FeatureId>{3a81201f-1cd0-4f6c-a008-7d1c53669e39}</FeatureId>
+    </None>
+    <None Include="Features\Feature3\Feature3.feature">
+      <FeatureId>{c5aa23ec-e0c9-4f1c-bc9e-3cd558ab9a1a}</FeatureId>
+    </None>
+    <None Include="Features\Feature4\Feature4.feature">
+      <FeatureId>{8e9fb45b-e4bb-4e88-b1ad-7db7f87fce0d}</FeatureId>
+    </None>
+    <None Include="Features\Feature5\Feature5.feature">
+      <FeatureId>{ec2de8c4-15dc-4388-aef8-7e5a8123114a}</FeatureId>
+    </None>
+    <None Include="GlobalSettings\GlobalSettingsInstance\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{405aca0e-960c-4bec-a5f0-de13a3f54004}</SharePointProjectItemId>
+    </None>
+    <None Include="GlobalSettings\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{ed0225de-f50b-4002-a242-565759cfff44}</SharePointProjectItemId>
     </None>
     <None Include="ListConfig\ListConfigInstance\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{bad472e5-a36a-4923-b038-47a6c02d05de}</SharePointProjectItemId>
@@ -95,7 +148,7 @@
       <SharePointProjectItemId>{08ce8a7b-605f-46f4-92d5-5543e1440b74}</SharePointProjectItemId>
     </None>
     <None Include="Package\Package.package">
-      <PackageId>{1ddca3c7-eee1-4d63-9552-24e33112050d}</PackageId>
+      <PackageId>{b74ab872-da1f-4cae-967f-251696efa0a2}</PackageId>
     </None>
     <None Include="SharePointProjectItem.spdata">
       <SharePointProjectItemId>{42dac00d-679a-4ed7-a498-6326bb674a81}</SharePointProjectItemId>

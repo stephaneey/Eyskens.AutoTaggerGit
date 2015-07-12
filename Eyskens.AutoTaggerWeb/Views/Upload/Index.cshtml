@@ -1,0 +1,16 @@
+﻿
+@{    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p style="margin-top:90px;"></p>
+@using (Html.BeginForm("Upload", "Upload", FormMethod.Post, new {
+    enctype = "multipart/form-data"     
+}    
+))
+{
+    @Html.Hidden("SPHostUrl", HttpContext.Current.Request.QueryString["SPHostUrl"])
+    @Html.Hidden("SPAppWebUrl", HttpContext.Current.Request.QueryString["SPAppWebUrl"])
+    <input type="file" name="file" />
+    <input type="submit" name="Submit" id="Submit" value="Upload" />
+}
+

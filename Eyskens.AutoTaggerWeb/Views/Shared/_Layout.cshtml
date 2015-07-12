@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.SharePoint.Client;
+@using Eyskens.AutoTaggerWeb.Helpers;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,43 +12,95 @@
     <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>     
     <script type="text/javascript">
     var hostweburl;
+    var appweburl;
     // Load the SharePoint resources.
     $(document).ready(function () {
         // Get the URI decoded app web URL.
         hostweburl = decodeURIComponent(getQueryStringParameter("SPHostUrl"));
+        appweburl = decodeURIComponent(getQueryStringParameter("SPAppWebUrl"));
         // The SharePoint js files URL are in the form
         // web_url/_layouts/15/resource.js
         var scriptbase = hostweburl + "/_layouts/15/";
         // Load the js file and continue to the success handler.
-        $.getScript(scriptbase + "SP.UI.Controls.js", renderChrome)
+        $.getScript(scriptbase + "SP.UI.Controls.js", renderChrome);
+        //Little trick to avoid disclosing the appcatalog URL when the app is deployed trough the app catalog
+        setTimeout(function () {
+            $("#chromeControl_topheader_apptitlelink").attr("href", "/?SPHostUrl=" + hostweburl + "&SPAppWebUrl=" + appweburl);
+        }, 3000);
+
     });
     // Function to prepare the options and render the control.
     function renderChrome() {
         // The Help, Account, and Contact pages receive the
         // same query string parameters as the main page.
-        var options = {
-            "appIconUrl": "/Content/Images/tagblue.png",
-            "appTitle": "Auto-Tagging",
-            "settingsLinks": [
+        var options = '';
+        @{
+            var spContext = SharePointContextProvider.Current.GetSharePointContext(HttpContext.Current);
+            bool isAdmin=false;
+            using (var ctx = spContext.CreateUserClientContextForSPHost())
+            {
+                ctx.Load(ctx.Web);
+                ctx.Load(ctx.Web.CurrentUser);
+                ctx.ExecuteQuery();
+                AppWebHelper hlp = new AppWebHelper(ctx.Web.Url,false);
+                isAdmin = hlp.IsAdministrator(ctx.Web.CurrentUser.LoginName,ctx.Web.CurrentUser.Email);
+            }
+            if (isAdmin)
+            { 
+            <text>
+             options = {
+                "appIconUrl": "/Content/Images/tagblue.png",
+                "appTitle": "Auto-Tagging",
+                "settingsLinks": [
+                     {
+                         "linkUrl": "/?SPHostUrl=" + hostweburl + "&SPAppWebUrl=" + appweburl,
+                         "displayName": "Home"
+                     },
+                    {
+                        "linkUrl": "/emptywords?SPHostUrl=" + hostweburl + "&SPAppWebUrl="+appweburl,
+                        "displayName": "Manage empty words"
+                    },
+                    {
+                        "linkUrl": "/globalsettings?SPHostUrl=" + hostweburl + "&SPAppWebUrl=" + appweburl,
+                        "displayName": "Manage global settings"
+                    },
+                     {
+                         "linkUrl": "/administrators?SPHostUrl=" + hostweburl + "&SPAppWebUrl=" + appweburl,
+                         "displayName": "Manage administrators"
+                     },
+                    {
+                        "linkUrl": "http://www.silver-it.com",
+                        "displayName": "About"
+                    }
+                ]
+             };
+            </text>
+        }
+        else
+            {
+                string url=HttpContext.Current.Request.Url.ToString().ToLowerInvariant();
+                if(url.IndexOf("administrators") != -1 ||
+                    url.IndexOf("emptywords") != -1 ||
+                    url.IndexOf("globalsettings") != -1)
                 {
-                    "linkUrl": "http://www.silver-it.com",
-                    "displayName": "About"
+                    throw new ApplicationException("You don't have the permission to access this page");
                 }
-            ]
-        };
+            }
+        }
+
         var nav = new SP.UI.Controls.Navigation("chrome_ctrl_placeholder", options);
         nav.setVisible(true);
     }
-    function getQueryStringParameter(paramToRetrieve) {
-        var params =
-            document.URL.split("?")[1].split("&");
-        var strParams = "";
-        for (var i = 0; i < params.length; i = i + 1) {
-            var singleParam = params[i].split("=");
-            if (singleParam[0] == paramToRetrieve)
-                return singleParam[1];
+        function getQueryStringParameter(paramToRetrieve) {
+            var params =
+                document.URL.split("?")[1].split("&");
+            var strParams = "";
+            for (var i = 0; i < params.length; i = i + 1) {
+                var singleParam = params[i].split("=");
+                if (singleParam[0] == paramToRetrieve)
+                    return singleParam[1];
+            }
         }
-    }
     </script>
 
 </head>

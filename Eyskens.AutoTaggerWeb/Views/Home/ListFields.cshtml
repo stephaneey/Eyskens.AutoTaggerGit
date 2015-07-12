@@ -4,7 +4,7 @@
         $('.clink').change(function () {
             var target = $(this);
             $.ajax({
-                url: "@Html.Raw(Url.Action("SetSync"))?SPHostUrl=https://eyskens.sharepoint.com/sites/autotagger",        
+                url: "@Html.Raw(Url.Action("SetSync"))?SPHostUrl=" + hostweburl+"&SPAppWebUrl="+appweburl,        
                 method:'POST',
                 data: {sync: $(this).is(':checked'), id:$(this).val()},
                 success: function (data) {
@@ -57,7 +57,8 @@
                                             @Ajax.ActionLink("Enable AT", "EnableAutoTagging",
                                                 new { 
                                                     id = string.Concat(item.Id, "_", f.Id),                                                                                                    
-                                                    SPHostUrl = "https://eyskens.sharepoint.com/sites/autotagger"
+                                                    SPHostUrl = HttpContext.Current.Request.QueryString["SPHostUrl"],
+                                                    SPAppWebUrl = HttpContext.Current.Request.QueryString["SPAppWebUrl"]
                                                  },
                                                 new AjaxOptions
                                                 {
@@ -74,7 +75,9 @@
                                         <td>
                                             @Ajax.ActionLink("Disable AT", "DisableAutoTagging", new {
                                                 id = string.Concat(item.Id, "_", f.Id),
-                                                SPHostUrl = "https://eyskens.sharepoint.com/sites/autotagger" }, 
+                                                SPHostUrl = HttpContext.Current.Request.QueryString["SPHostUrl"].ToString(),
+                                                SPAppWebUrl = HttpContext.Current.Request.QueryString["SPAppWebUrl"]
+                                                },
                                                 new AjaxOptions
                                                 {
                                                     InsertionMode = InsertionMode.Replace,

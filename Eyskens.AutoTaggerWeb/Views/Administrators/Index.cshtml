@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Eyskens.AutoTaggerWeb.Models.Administrator>
+
+@{
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p style="margin-top:90px;">
+    @Html.ActionLink("Create New", "Create",
+        new
+        {
+            SPHostUrl = HttpContext.Current.Request.QueryString["SPHostUrl"],
+            SPAppWebUrl = HttpContext.Current.Request.QueryString["SPAppWebUrl"]
+        })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LoginName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoginName)
+        </td>
+        <td>            
+            @Html.ActionLink("Delete", "Delete",
+                    new
+                    {
+                        id = item.id,
+                        SPHostUrl = HttpContext.Current.Request.QueryString["SPHostUrl"],
+                        SPAppWebUrl = HttpContext.Current.Request.QueryString["SPAppWebUrl"]
+                    })
+        </td>
+    </tr>
+}
+
+</table>

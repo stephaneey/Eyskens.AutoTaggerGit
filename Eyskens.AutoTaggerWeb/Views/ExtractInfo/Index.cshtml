@@ -1,0 +1,44 @@
+﻿@model Eyskens.AutoTaggerWeb.Models.DocumentInformation
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div style="margin-top:90px;height:500px;overflow-y:scroll;">    
+    <h2>Entities</h2>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Locations)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Locations)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organizations)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organizations)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Persons)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Persons)
+        </dd>
+    </dl>
+    <h2>Tokens</h2>
+    <dl class="dl-horizontal">
+        <dd>
+            @Html.DisplayFor(model => model.Tokens)
+        </dd>
+
+    </dl>
+</div>
