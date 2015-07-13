@@ -10,8 +10,6 @@ using System.Reflection;
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using System.Xml;
-using org.apache.pdfbox.pdmodel;
-using org.apache.pdfbox.util;
 using System.Xml.Linq;
 using System.Web;
 

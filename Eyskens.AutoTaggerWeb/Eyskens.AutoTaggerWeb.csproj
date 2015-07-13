@@ -54,9 +54,6 @@
       <Private>True</Private>
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="fontbox-1.8.2">
-      <HintPath>..\packages\Pdfbox.1.1.1\lib\fontbox-1.8.2.dll</HintPath>
-    </Reference>
     <Reference Include="icu4j-3.8">
       <HintPath>..\packages\Pdfbox.1.1.1\lib\icu4j-3.8.dll</HintPath>
     </Reference>
@@ -144,6 +141,9 @@
     <Reference Include="IKVM.Runtime.JNI">
       <HintPath>C:\Users\Stephane\Documents\Visual Studio 2013\Projects\entities\packages\IKVM.8.0.5449.1\lib\IKVM.Runtime.JNI.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>C:\Users\Stephane\Downloads\tagger adjust\tagger adjust\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="IvanAkcheurov.Commons">
       <HintPath>..\..\..\Users\E602036\Downloads\NTextCat 0.2.1.1\IvanAkcheurov.Commons.dll</HintPath>
     </Reference>
@@ -211,9 +211,6 @@
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
-    </Reference>
-    <Reference Include="pdfbox-1.8.2">
-      <HintPath>..\packages\Pdfbox.1.1.1\lib\pdfbox-1.8.2.dll</HintPath>
     </Reference>
     <Reference Include="stanford-ner">
       <HintPath>..\packages\Stanford.NLP.NER.3.5.2\lib\stanford-ner.dll</HintPath>

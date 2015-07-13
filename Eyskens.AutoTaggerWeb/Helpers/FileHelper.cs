@@ -1,7 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
+using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.parser;
 using Microsoft.SharePoint.Client;
-using org.apache.pdfbox.pdmodel;
-using org.apache.pdfbox.util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,84 +46,89 @@ namespace Eyskens.AutoTaggerWeb.Helpers
         }
         private static string parseUsingPDFBox(string input)
         {
-            PDDocument doc = null;
+            PdfReader reader = null;
             try
             {
-                doc = PDDocument.load(input);
-                PDFTextStripper stripper = new PDFTextStripper();
-                return stripper.getText(doc);
+                reader = new PdfReader(input);
+
+                StringWriter output = new StringWriter();
+
+                for (int i = 1; i <= reader.NumberOfPages; i++)
+                    output.WriteLine(PdfTextExtractor.GetTextFromPage(reader, i, new SimpleTextExtractionStrategy()));
+
+                return output.ToString();
             }
             finally
             {
-                if (doc != null)
+                if (reader != null)
                 {
-                    doc.close();
+                    reader.Close();
                 }
             }
 
         }
-        public static string GetFileContent(ClientContext ctx, Guid ListId, int ItemId,out ListItem DocumentItem)
+        public static string GetFileContent(ClientContext ctx, Guid ListId, int ItemId, out ListItem DocumentItem)
         {
             string localFilePath = null;
             string FileContent = null;
             try
             {
                 List _library = ctx.Web.Lists.GetById(ListId);
-            DocumentItem = _library.GetItemById(ItemId);
-            ctx.Load(DocumentItem);
-            ctx.Load(DocumentItem.ContentType);
-            Microsoft.SharePoint.Client.File file = DocumentItem.File;
-            ctx.Load(file);
-            ClientResult<Stream> data = file.OpenBinaryStream();
-            ctx.ExecuteQuery();
-
-            if (DocumentItem.File.Length == 0)
-            {
-                System.Threading.Thread.Sleep(20000);
                 DocumentItem = _library.GetItemById(ItemId);
                 ctx.Load(DocumentItem);
-                file = DocumentItem.File;
+                ctx.Load(DocumentItem.ContentType);
+                Microsoft.SharePoint.Client.File file = DocumentItem.File;
                 ctx.Load(file);
-                data = file.OpenBinaryStream();
+                ClientResult<Stream> data = file.OpenBinaryStream();
                 ctx.ExecuteQuery();
-            }
 
-            if (data != null)
-            {
-                if (file.Name.EndsWith(".pdf"))
+                if (DocumentItem.File.Length == 0)
                 {
-                    int bufferSize = Convert.ToInt32(DocumentItem.File.Length);
-                    int position = 1;
-                    localFilePath = string.Concat(System.IO.Path.GetTempFileName(), Guid.NewGuid(), ".pdf");
+                    System.Threading.Thread.Sleep(20000);
+                    DocumentItem = _library.GetItemById(ItemId);
+                    ctx.Load(DocumentItem);
+                    file = DocumentItem.File;
+                    ctx.Load(file);
+                    data = file.OpenBinaryStream();
+                    ctx.ExecuteQuery();
+                }
 
-                    Byte[] readBuffer = new Byte[bufferSize];
-                    using (System.IO.Stream stream = System.IO.File.Create(localFilePath))
+                if (data != null)
+                {
+                    if (file.Name.EndsWith(".pdf"))
                     {
-                        while (position > 0)
+                        int bufferSize = Convert.ToInt32(DocumentItem.File.Length);
+                        int position = 1;
+                        localFilePath = string.Concat(System.IO.Path.GetTempFileName(), Guid.NewGuid(), ".pdf");
+
+                        Byte[] readBuffer = new Byte[bufferSize];
+                        using (System.IO.Stream stream = System.IO.File.Create(localFilePath))
                         {
-                            position = data.Value.Read(readBuffer, 0, bufferSize);
-                            stream.Write(readBuffer, 0, position);
-                            readBuffer = new Byte[bufferSize];
+                            while (position > 0)
+                            {
+                                position = data.Value.Read(readBuffer, 0, bufferSize);
+                                stream.Write(readBuffer, 0, position);
+                                readBuffer = new Byte[bufferSize];
+                            }
+                            stream.Flush();
                         }
-                        stream.Flush();
+
+                        FileContent = parseUsingPDFBox(localFilePath);
+
                     }
-
-                    FileContent = parseUsingPDFBox(localFilePath);
-
+                    else if (file.Name.EndsWith(".docx"))
+                    {
+                        FileContent = ParseWordDoc(data.Value);
+                    }
+                    else
+                    {
+                        LogHelper.Log(string.Format("File format of file {0} not supported", file.Name), LogSeverity.Error);
+                        return null;
+                    }
                 }
-                else if (file.Name.EndsWith(".docx"))
-                {
-                    FileContent = ParseWordDoc(data.Value);
-                }
-                else
-                {
-                    LogHelper.Log(string.Format("File format of file {0} not supported", file.Name), LogSeverity.Error);
-                    return null;
-                }
-            }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogHelper.Log(ex.Message + " " + ex.StackTrace, LogSeverity.Error);
                 throw;
@@ -135,7 +140,7 @@ namespace Eyskens.AutoTaggerWeb.Helpers
                     System.IO.File.Delete(localFilePath);
                 }
             }
-            
+
             return FileContent;
         }
     }
