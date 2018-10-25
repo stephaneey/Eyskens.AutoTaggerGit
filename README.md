@@ -1,3 +1,18 @@
+# Security alert
+GitHub reported the following potential security alert, since I do not maintain this repo, I let you upgrade the odata library yourself:
+1 Microsoft.Data.OData vulnerability found in Eyskens.AutoTaggerWeb/packages.config
+Remediation
+Upgrade Microsoft.Data.OData to version 5.8.4 or later. For example:
+
+<package id="Microsoft.Data.OData" version="5.8.4" />
+Always verify the validity and compatibility of suggestions with your codebase.
+
+Details
+CVE-2018-8269 More information
+moderate severity
+Vulnerable versions: < 5.8.4
+Patched version: 5.8.4
+A denial of service vulnerability exists when OData Library improperly handles web requests, aka "OData Denial of Service Vulnerability." This affects Microsoft.Data.OData.
 # Eyskens.AutoTaggerGit
 An auto-tagging add-in for SharePoint Online
 
